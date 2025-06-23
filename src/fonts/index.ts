@@ -12,5 +12,5 @@ export const montserrat = localFont({
     },
   ],
   display: 'swap',
-  variable: '--font-montserrat',
+  variable: '--font-sans',
 });
