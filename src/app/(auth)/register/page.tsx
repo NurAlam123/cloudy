@@ -1,3 +1,4 @@
+import registerAction from '@/actions/registerAction';
 import Button from '@/components/Button';
 import TextField from '@/components/TextField';
 import Image from 'next/image';
@@ -51,8 +52,8 @@ const Register = () => {
           </p>
 
           <form
-            method='POST'
             className='grid grid-cols-1 gap-4'
+            action={registerAction}
           >
             <TextField
               type='text'

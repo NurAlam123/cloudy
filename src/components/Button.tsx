@@ -15,7 +15,7 @@ const Button = ({
 } & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
-      className={`btn ${variant} ${color} ${className}`}
+      className={`btn ${variant} ${color} ${className} cursor-pointer`}
       {...rest}
     >
       {children}
