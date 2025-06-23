@@ -3,7 +3,10 @@ import './globals.css';
 import { montserrat } from '@/fonts';
 
 export const metadata: Metadata = {
-  title: 'Cloudy',
+  title: {
+    default: 'Cloudy',
+    template: '%s | Cloudy',
+  },
   description: 'Experience smart and creative conversation with Cloudy.',
 };
 
