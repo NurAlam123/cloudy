@@ -20,16 +20,20 @@ const Register = () => {
           >
             <div className='dark:hidden flex items-center'>
               <Image
+                draggable={false}
                 alt='Cloudy'
                 src='/cloudy-light.svg'
                 width={64}
                 height={64}
+                className='aspewct-auto w-16 h-16'
               />{' '}
               <span className='text-xl font-bold'>Cloudy</span>
             </div>
 
             <div className='hidden dark:flex dark:items-center'>
               <Image
+                draggable={false}
+                className='aspewct-auto w-16 h-16'
                 alt='Cloudy'
                 src='/cloudy-dark.svg'
                 width={64}
@@ -83,25 +87,35 @@ const Register = () => {
             <Button type='submit'>Create account</Button>
           </form>
 
-          <p className='text-body-medium text-light-onSurfaceVariant dark:text-dark-surfaceVariant text-center mt-4'>
+          <p className='text-body-medium text-light-onSurface dark:text-dark-onSurface text-center mt-4'>
             Already have an account?
-            <Link className='link inline-block ms-1 text-light-onSurface dark:text-dark-onSurface' href='/login'>Sign in</Link>
+            <Link
+              className='link inline-block ms-1 text-light-primary dark:text-dark-primary'
+              href='/login'
+            >
+              Sign in
+            </Link>
           </p>
         </div>
 
-          <p className='mt-auto mx-auto text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant text-body-medium lg:mx-0'>&copy; 2025 Nur Alam. All right reserved.</p>
+        <p className='mt-auto mx-auto text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant text-body-medium lg:mx-0'>
+          &copy; 2025 Nur Alam. All right reserved.
+        </p>
       </div>
 
       <div className='hidden lg:block lg:relative lg:rounded-lg lg:overflow-hidden'>
         <Image
-          className='h-full w-full object-cover'
+          draggable={false}
+          className='h-full w-full object-cover aspect-auto'
           src='/banner.webp'
           alt='Banner'
           width={1080}
           height={1080}
         />
 
-        <p className='absolute bottom-10 left-12 right-12 z-10 text-display-large font-semibold leading-tight text-right text-light-onSurface drop-shadow-sm 2xl:text-[72px]'>Chat with Cloudy to supercharge your ideas</p>
+        <p className='absolute bottom-10 left-12 right-12 z-10 text-display-large font-semibold leading-tight text-right text-light-onSurface drop-shadow-sm 2xl:text-[72px]'>
+          Chat with Cloudy to supercharge your ideas
+        </p>
       </div>
     </div>
   );
