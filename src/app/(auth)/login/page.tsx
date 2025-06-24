@@ -1,13 +1,13 @@
-import RegisterForm from '@/components/RegisterForm';
+import LoginForm from '@/components/LoginForm';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Create an account',
+  title: 'Login',
 };
 
-// Register Form
-const Register = () => {
+// Login Form
+const Login = () => {
   return (
     <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:[grid-template-columns:1fr_1.2fr] lg:gap-2'>
       <div className='flex flex-col p-4'>
@@ -46,22 +46,21 @@ const Register = () => {
 
         <div className='flex flex-col gap-2 max-w-[480px] mx-auto w-full'>
           <h2 className='text-display-small font-semibold text-light-onBackground dark:text-dark-onBackground text-center'>
-            Create an account
+            Welcome Back to Cloudy
           </h2>
           <p className='text-body-large text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant mt-1 mb-5 px-2 text-center'>
-            Register today and gain access to powerful tools that will
-            supercharge your ideas.
+            Enter your account details.
           </p>
 
-          <RegisterForm />
+          <LoginForm />
 
           <p className='text-body-medium text-light-onSurface dark:text-dark-onSurface text-center mt-4'>
-            Already have an account?
+            Don&apos;t have an account?
             <Link
               className='link inline-block ms-1 text-light-primary dark:text-dark-primary'
-              href='/login'
+              href='/register'
             >
-              Login
+              Create an account
             </Link>
           </p>
         </div>
@@ -89,4 +88,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
