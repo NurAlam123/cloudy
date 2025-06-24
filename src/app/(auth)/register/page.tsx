@@ -13,7 +13,7 @@ const Register = () => {
     <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:[grid-template-columns:1fr_1.2fr] lg:gap-2'>
       <div className='flex flex-col p-4'>
         <div className='mb-auto'>
-          <Logo />
+          <Logo className='mx-auto' />
         </div>
 
         <div className='flex flex-col gap-2 max-w-[480px] mx-auto w-full'>

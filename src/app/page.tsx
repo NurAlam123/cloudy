@@ -1,3 +1,4 @@
+import Sidebar from '@/components/Sidebar';
 import TopAppBar from '@/components/TopAppBar';
 
 export const metadata = {
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <div>
       {/* Sidebar */}
+      <Sidebar />
       <div>
         {/* Top app bar */}
         <TopAppBar />

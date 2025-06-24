@@ -5,16 +5,18 @@ import Link from 'next/link';
 const Logo = ({
   width,
   height,
+  className,
 }: Readonly<{
   width?: string;
   height?: string;
+  className?: string;
 }>) => {
   return (
     <Link
       href='/'
-      className='max-w-max mx-auto mb-auto lg:mx-0'
+      className={cn('max-w-max mb-auto lg:mx-0', className)}
     >
-      <div className='dark:hidden flex items-center'>
+      <div className='dark:hidden flex items-center gap-1.5'>
         <Image
           draggable={false}
           alt='Cloudy'
@@ -26,7 +28,7 @@ const Logo = ({
         <span className='text-xl font-bold'>Cloudy</span>
       </div>
 
-      <div className='hidden dark:flex dark:items-center'>
+      <div className='hidden dark:flex dark:items-center gap-1.5'>
         <Image
           draggable={false}
           className={cn('aspewct-auto w-16 h-16', width, height)}

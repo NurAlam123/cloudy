@@ -31,11 +31,13 @@ const IconButton = ({
   className = '',
   children,
   icon,
+  size,
   ...rest
 }: {
   className?: string;
   children?: React.ReactNode;
   icon?: string;
+  size?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
@@ -51,7 +53,8 @@ const IconButton = ({
           alt={icon}
           width={24}
           height={24}
-          className='h-6 w-6 aspect-auto'
+          className={cn('h-6 w-6 aspect-auto', size)}
+          draggable='false'
         />
       )}
       {children}

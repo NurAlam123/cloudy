@@ -9,11 +9,14 @@ import MenuItem from './MenuItem';
 import { cn } from '@/utils';
 import { account } from '@/lib/appwrite';
 import { useRouter } from 'next/navigation';
+import useSidebarStore from '@/store/useSidebarStore';
 
 const TopAppBar = () => {
   const router = useRouter();
 
   const [toggleMenuItem, setToggleMenuItem] = useState(false);
+
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
   const logout = async () => {
     try {
@@ -28,7 +31,10 @@ const TopAppBar = () => {
   return (
     <header className='relative flex justify-between items-center h-16 px-4'>
       <div className='flex items-center gap-1'>
-        <IconButton icon='/menu.svg' />
+        <IconButton
+          icon='/menu.svg'
+          onClick={toggleSidebar}
+        />
 
         <Logo width='w-7 h-7 min-w-7 min-h-7' />
       </div>
