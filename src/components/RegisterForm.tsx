@@ -1,16 +1,22 @@
 'use client';
 
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import Button from './Button';
 import TextField from './TextField';
 import registerAction from '@/actions/registerAction';
 import { useRouter } from 'next/navigation';
+import Form from 'next/form';
+import { CircularProgress } from './ProgressBar';
+import { toast } from 'sonner';
 
 const RegisterForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const formData = new FormData(e.target as HTMLFormElement);
 
@@ -21,16 +27,18 @@ const RegisterForm = () => {
     const res = await registerAction(email, password, name);
 
     if (res.success) {
+      setLoading(false);
       router.push('/');
     } else {
-      router.push('/login');
+      setLoading(false);
+      toast.error(res.message);
     }
   };
 
   return (
-    <form
+    <Form
+      action='/'
       className='grid grid-cols-1 gap-4'
-      method='POST'
       onSubmit={submitHandler}
     >
       <TextField
@@ -58,8 +66,17 @@ const RegisterForm = () => {
         required
       />
 
-      <Button type='submit'>Create account</Button>
-    </form>
+      <Button
+        type='submit'
+        disabled={loading}
+      >
+        {loading ? (
+          <CircularProgress className='w-5 h-5 border-2' />
+        ) : (
+          'Create account'
+        )}
+      </Button>
+    </Form>
   );
 };
 
