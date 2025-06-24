@@ -27,6 +27,16 @@ const NavLink = ({ href, title }: { href: string; title: string }) => {
             width={20}
             height={20}
             draggable='false'
+            className='block dark:hidden'
+          />
+
+          <Image
+            src='/message-circle-dark.svg'
+            alt='Message'
+            width={20}
+            height={20}
+            draggable='false'
+            className='dark:block hidden'
           />
 
           <p className='truncate max-w-44 text-sm'>{title}</p>
@@ -36,8 +46,14 @@ const NavLink = ({ href, title }: { href: string; title: string }) => {
       <IconButton
         icon='/trash.svg'
         size='h-5 w-5'
-        className='h-5 w-5 invisible group-hover:visible transition-[visibility] duration-100 ease-in-out absolute top-1/2 right-0 -translate-1/2'
-      ></IconButton>
+        className='dark:hidden grid h-5 w-5 invisible group-hover:visible transition-[visibility] duration-100 ease-in-out absolute top-1/2 right-0 -translate-1/2'
+      />
+
+      <IconButton
+        icon='/trash-dark.svg'
+        size='h-5 w-5'
+        className='dark:grid hidden h-5 w-5 invisible group-hover:visible transition-[visibility] duration-100 ease-in-out absolute top-1/2 right-0 -translate-1/2'
+      />
     </div>
   );
 };

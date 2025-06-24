@@ -34,6 +34,12 @@ const TopAppBar = () => {
         <IconButton
           icon='/menu.svg'
           onClick={toggleSidebar}
+          className='grid dark:hidden'
+        />
+        <IconButton
+          icon='/menu-dark.svg'
+          onClick={toggleSidebar}
+          className='hidden dark:grid'
         />
 
         <Logo width='w-7 h-7 min-w-7 min-h-7' />

@@ -7,12 +7,19 @@ import useSidebarStore from '@/store/useSidebarStore';
 import { cn } from '@/utils';
 import { IconButton } from './Button';
 
+import { motion } from 'motion/react';
+
 const Sidebar = () => {
   const openSidebar = useSidebarStore((state) => state.openSidebar);
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
   return (
-    <div className={cn('sidebar hidden h-full', openSidebar && 'block')}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className={cn('sidebar hidden h-full', openSidebar && 'block')}
+    >
       <div className='flex flex-col justify-between gap-4 h-full p-3'>
         <div className='flex justify-between items-center'>
           <Logo
@@ -22,6 +29,12 @@ const Sidebar = () => {
           <IconButton
             icon='/x.svg'
             onClick={toggleSidebar}
+            className='dark:hidden grid'
+          />
+          <IconButton
+            icon='/x-dark.svg'
+            onClick={toggleSidebar}
+            className='hidden dark:grid'
           />
         </div>
         <button className='flex items-center bg-light-primaryContainer text-light-onPrimaryContainer dark:bg-dark-primaryContainer dark:text-dark-onPrimaryContainer rounded-lg gap-2 text-label-large max-w-max h-[56px] ps-3 pe-4 shadow-elevation1 transition-shadow duration-150 ease-standard hover:shadow-elevation2 focus:shadow-elevation1 cursor-pointer disabled:bg-light-onSurface/[0.12] disabled:dark:bg-dark-onSurface/[0.12] disabled:text-light-onSurface/[0.38] disabled:dark:text-dark-onSurface/[0.38] disabled:shadow-none disabled:pointer-events-none'>
@@ -31,6 +44,15 @@ const Sidebar = () => {
             width={20}
             height={20}
             draggable={false}
+            className='block dark:hidden'
+          />
+          <Image
+            src='/plus-dark.svg'
+            alt='Plus'
+            width={20}
+            height={20}
+            draggable={false}
+            className='dark:block hidden'
           />
           <p>New Chat</p>
         </button>
@@ -50,7 +72,7 @@ const Sidebar = () => {
         </div>
         <p>&copy; 2025 Nur Alam</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
