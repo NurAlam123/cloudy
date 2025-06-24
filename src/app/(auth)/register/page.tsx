@@ -1,6 +1,4 @@
-import registerAction from '@/actions/registerAction';
-import Button from '@/components/Button';
-import TextField from '@/components/TextField';
+import RegisterForm from '@/components/RegisterForm';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -55,37 +53,7 @@ const Register = () => {
             supercharge your ideas.
           </p>
 
-          <form
-            className='grid grid-cols-1 gap-4'
-            action={registerAction}
-          >
-            <TextField
-              type='text'
-              name='name'
-              label='Full name'
-              placeholder='Full name'
-              required
-              autoFocus
-            />
-
-            <TextField
-              type='email'
-              name='email'
-              label='Email'
-              placeholder='Email'
-              required
-            />
-
-            <TextField
-              type='password'
-              name='password'
-              label='Password'
-              placeholder='Enter your password'
-              required
-            />
-
-            <Button type='submit'>Create account</Button>
-          </form>
+          <RegisterForm />
 
           <p className='text-body-medium text-light-onSurface dark:text-dark-onSurface text-center mt-4'>
             Already have an account?
