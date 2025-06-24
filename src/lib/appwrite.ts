@@ -1,4 +1,4 @@
-import { Account, Client } from 'appwrite';
+import { Account, Avatars, Client } from 'appwrite';
 
 // Initialize client
 const client = new Client();
@@ -8,4 +8,7 @@ client
   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string);
 
 // Initialize account
-export const account = new Account(client)
+export const account = new Account(client);
+
+// Initialize avatars
+export const avatars = new Avatars(client);

@@ -1,4 +1,5 @@
 import LoginForm from '@/components/LoginForm';
+import Logo from '@/components/Logo';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,36 +13,7 @@ const Login = () => {
     <div className='relative w-screen h-dvh p-2 grid grid-cols-1 lg:[grid-template-columns:1fr_1.2fr] lg:gap-2'>
       <div className='flex flex-col p-4'>
         <div className='mb-auto'>
-          <Link
-            href='/'
-            className='max-w-max mx-auto mb-auto lg:mx-0'
-          >
-            <div className='dark:hidden flex items-center'>
-              <Image
-                draggable={false}
-                alt='Cloudy'
-                src='/cloudy-light.svg'
-                width={64}
-                height={64}
-                className='aspewct-auto w-16 h-16'
-              />{' '}
-              <span className='text-xl font-bold'>Cloudy</span>
-            </div>
-
-            <div className='hidden dark:flex dark:items-center'>
-              <Image
-                draggable={false}
-                className='aspewct-auto w-16 h-16'
-                alt='Cloudy'
-                src='/cloudy-dark.svg'
-                width={64}
-                height={64}
-              />{' '}
-              <span className='text-xl font-bold text-shadow-white'>
-                Cloudy
-              </span>
-            </div>
-          </Link>
+          <Logo />
         </div>
 
         <div className='flex flex-col gap-2 max-w-[480px] mx-auto w-full'>

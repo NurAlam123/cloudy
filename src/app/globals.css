@@ -374,6 +374,15 @@ body {
   .link {
     @apply transition-colors duration-150 ease-standard hover:text-light-primary hover:dark:text-dark-primary hover:underline;
   }
+
+  /* Menu */
+  .menu {
+    @apply bg-light-surfaceContainer dark:bg-dark-surfaceContainer absolute top-[calc(100%+4px)] right-0 min-w-[112px] max-w-[280px] py-2 rounded-xs shadow-elevation2 z-20 origin-top-right scale-75 opacity-0 invisible transition-[transform,opacity,visibility] duration-150 ease-standard;
+  }
+
+  .menu.active {
+    @apply scale-100 opacity-100 visible;
+  }
 }
 
 @layer utilities {

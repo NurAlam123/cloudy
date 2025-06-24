@@ -1,3 +1,5 @@
+import { cn } from '@/utils';
+import Image from 'next/image';
 import { ButtonHTMLAttributes } from 'react';
 
 // Common Button
@@ -24,4 +26,39 @@ const Button = ({
   );
 };
 
-export default Button;
+// Icon button
+const IconButton = ({
+  className = '',
+  children,
+  icon,
+  ...rest
+}: {
+  className?: string;
+  children?: React.ReactNode;
+  icon?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>) => {
+  return (
+    <button
+      className={cn(
+        'text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant grid place-items-center gap-1 cursor-pointer rounded-full h-10 w-10',
+        className,
+      )}
+      {...rest}
+    >
+      {icon && (
+        <Image
+          src={icon}
+          alt={icon}
+          width={24}
+          height={24}
+          className='h-6 w-6 aspect-auto'
+        />
+      )}
+      {children}
+      <span className='sr-only'>{children}</span>
+      <div className='bg-light-onSurface dark:bg-dark-onSurface'></div>
+    </button>
+  );
+};
+
+export { Button, IconButton };

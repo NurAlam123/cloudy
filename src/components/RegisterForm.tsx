@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import Button from './Button';
+import { Button } from './Button';
 import TextField from './TextField';
 import registerAction from '@/actions/registerAction';
 import { useRouter } from 'next/navigation';
