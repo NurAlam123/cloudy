@@ -6,12 +6,22 @@ import NavLink from './NavLink';
 import useSidebarStore from '@/store/useSidebarStore';
 import { cn } from '@/utils';
 import { IconButton } from './Button';
-
-import { motion } from 'motion/react';
+import { useEffect, useState } from 'react';
+import getConversations from '@/lib/getConversations';
 
 const Sidebar = () => {
   const openSidebar = useSidebarStore((state) => state.openSidebar);
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  const [conversations, setConversations] = useState<
+    { title: string; $id: string }[] | null
+  >(null);
+
+  useEffect(() => {
+    getConversations().then((res) => {
+      if (!res) return;
+      setConversations(res.documents as []);
+    });
+  }, []);
 
   return (
     <div className={cn('sidebar h-full hidden', openSidebar && 'active block')}>
@@ -61,10 +71,13 @@ const Sidebar = () => {
 
         <div className='flex-1 h-full -me-2 pe-1 overflow-y-auto pb-3'>
           <nav className='space-y-1.5'>
-            <NavLink
-              href='/'
-              title='New Conversations'
-            />
+            {conversations?.map(({ title, $id: id }) => (
+              <NavLink
+                key={id}
+                href={`/chat/${id}`}
+                title={title}
+              />
+            ))}
           </nav>
         </div>
         <p>&copy; 2025 Nur Alam</p>

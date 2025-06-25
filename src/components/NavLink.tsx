@@ -13,7 +13,7 @@ const NavLink = ({ href, title }: { href: string; title: string }) => {
   return (
     <div className='relative group'>
       <Link
-        href={'/'}
+        href={href}
         className={cn(
           'flex items-center justify-between gap-3 text-label-large text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant h-9 rounded-full ps-4 pe-10 group',
           isActive &&
