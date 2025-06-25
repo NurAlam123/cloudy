@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from './Avatar';
 import { IconButton } from './Button';
 import Logo from './Logo';
@@ -16,7 +16,7 @@ const TopAppBar = () => {
 
   const [toggleMenuItem, setToggleMenuItem] = useState(false);
 
-  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+  const { toggleSidebar } = useSidebarStore();
 
   const logout = async () => {
     try {
@@ -32,11 +32,13 @@ const TopAppBar = () => {
     <header className='relative flex justify-between items-center h-16 px-4'>
       <div className='flex items-center gap-1'>
         <IconButton
+          title='menu'
           icon='/menu.svg'
           onClick={toggleSidebar}
           className='grid dark:hidden'
         />
         <IconButton
+          title='menu'
           icon='/menu-dark.svg'
           onClick={toggleSidebar}
           className='hidden dark:grid'
@@ -46,7 +48,10 @@ const TopAppBar = () => {
       </div>
 
       <div className='menu-wrapper'>
-        <IconButton onClick={() => setToggleMenuItem(!toggleMenuItem)}>
+        <IconButton
+          title='menu'
+          onClick={() => setToggleMenuItem(!toggleMenuItem)}
+        >
           <Avatar name='Nur Alam' />
         </IconButton>
 

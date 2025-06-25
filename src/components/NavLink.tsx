@@ -44,12 +44,14 @@ const NavLink = ({ href, title }: { href: string; title: string }) => {
       </Link>
 
       <IconButton
+        title='trash'
         icon='/trash.svg'
         size='h-5 w-5'
         className='dark:hidden grid h-5 w-5 invisible group-hover:visible transition-[visibility] duration-100 ease-in-out absolute top-1/2 right-0 -translate-1/2'
       />
 
       <IconButton
+        title='trash'
         icon='/trash-dark.svg'
         size='h-5 w-5'
         className='dark:grid hidden h-5 w-5 invisible group-hover:visible transition-[visibility] duration-100 ease-in-out absolute top-1/2 right-0 -translate-1/2'

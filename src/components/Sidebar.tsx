@@ -14,12 +14,7 @@ const Sidebar = () => {
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2, ease: 'easeOut' }}
-      className={cn('sidebar hidden h-full', openSidebar && 'block')}
-    >
+    <div className={cn('sidebar h-full hidden', openSidebar && 'active block')}>
       <div className='flex flex-col justify-between gap-4 h-full p-3'>
         <div className='flex justify-between items-center'>
           <Logo
@@ -27,11 +22,13 @@ const Sidebar = () => {
             height='h-8'
           />
           <IconButton
+            title='close'
             icon='/x.svg'
             onClick={toggleSidebar}
             className='dark:hidden grid'
           />
           <IconButton
+            title='close'
             icon='/x-dark.svg'
             onClick={toggleSidebar}
             className='hidden dark:grid'
@@ -72,7 +69,7 @@ const Sidebar = () => {
         </div>
         <p>&copy; 2025 Nur Alam</p>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

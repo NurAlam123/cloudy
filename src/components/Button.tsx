@@ -1,6 +1,11 @@
+'use client';
+
 import { cn } from '@/utils';
+import { MotionProps } from 'motion/react';
 import Image from 'next/image';
 import { ButtonHTMLAttributes } from 'react';
+
+import { motion } from 'motion/react';
 
 // Common Button
 const Button = ({
@@ -32,17 +37,20 @@ const IconButton = ({
   children,
   icon,
   size,
+  title,
   ...rest
 }: {
   className?: string;
   children?: React.ReactNode;
   icon?: string;
   size?: string;
-} & ButtonHTMLAttributes<HTMLButtonElement>) => {
+  title: string;
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  MotionProps) => {
   return (
-    <button
+    <motion.button
       className={cn(
-        'text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant grid place-items-center gap-1 cursor-pointer rounded-full h-10 w-10',
+        'text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant grid place-items-center gap-1 cursor-pointer rounded-full h-7 w-7 aspect-square',
         className,
       )}
       {...rest}
@@ -58,9 +66,9 @@ const IconButton = ({
         />
       )}
       {children}
-      <span className='sr-only'>{children}</span>
+      <span className='sr-only'>{title}</span>
       <div className='bg-light-onSurface dark:bg-dark-onSurface'></div>
-    </button>
+    </motion.button>
   );
 };
 

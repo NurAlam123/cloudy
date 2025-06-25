@@ -1,4 +1,5 @@
 import Greetings from '@/components/Greetings';
+import PromptField from '@/components/PromptField';
 import Sidebar from '@/components/Sidebar';
 import TopAppBar from '@/components/TopAppBar';
 
@@ -8,7 +9,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div>
+    <div className='px-2 max-w-3xl mx-auto'>
       {/* Sidebar */}
       <Sidebar />
       <div className='h-dvh flex flex-col justify-between'>
@@ -23,6 +24,7 @@ export default function Home() {
         </div>
 
         {/* Prompt field */}
+        <PromptField />
         <div className='max-w-[870px] px-5 w-full mx-auto py-2'>
           <p className='text-center text-xs animate-fadein'>
             <span className='block'>

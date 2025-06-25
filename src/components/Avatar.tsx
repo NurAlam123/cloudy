@@ -10,7 +10,7 @@ const Avatar = ({ name }: Readonly<{ name: string }>) => {
         alt={name}
         width={48}
         height={48}
-        className='rounded-full w-10 h-10'
+        className='rounded-full w-7 h-7 aspect-square'
       />
     </figure>
   );
