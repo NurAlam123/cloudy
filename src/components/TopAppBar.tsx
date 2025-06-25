@@ -1,15 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Avatar from './Avatar';
 import { IconButton } from './Button';
 import Logo from './Logo';
 import Menu from './Menu';
 import MenuItem from './MenuItem';
 import { cn } from '@/utils';
-import { account } from '@/lib/appwrite';
 import { useRouter } from 'next/navigation';
 import useSidebarStore from '@/store/useSidebarStore';
+import logoutAction from '@/actions/logoutAction';
+import { toast } from 'sonner';
 
 const TopAppBar = () => {
   const router = useRouter();
@@ -19,13 +20,11 @@ const TopAppBar = () => {
   const { toggleSidebar } = useSidebarStore();
 
   const logout = async () => {
-    try {
-      await account.deleteSession('current');
-    } catch (err) {
-      console.error(err);
-    } finally {
-      router.push('/login');
-    }
+    const res = await logoutAction();
+    if (!res.success) toast(res.message);
+
+    toast(res.message);
+    router.push('/login');
   };
 
   return (

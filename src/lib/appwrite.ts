@@ -1,14 +1,41 @@
-import { Account, Avatars, Client } from 'appwrite';
+import { Client, Account, Databases, Avatars } from 'node-appwrite';
 
-// Initialize client
-const client = new Client();
+const createMainClient = async () => {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string)
+    .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY as string);
 
-client
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string)
-  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string);
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+      return new Databases(client);
+    },
+    get avatars() {
+      return new Avatars(client);
+    },
+  };
+};
 
-// Initialize account
-export const account = new Account(client);
+const createSessionClient = async (session: string) => {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
-// Initialize avatars
-export const avatars = new Avatars(client);
+  if (session) {
+    client.setSession(session);
+  }
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+      return new Databases(client);
+    },
+  };
+};
+
+export { createMainClient, createSessionClient };

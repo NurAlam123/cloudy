@@ -1,12 +1,25 @@
-// import { avatars } from '@/lib/appwrite';
-import Image from 'next/image';
+'use client';
+
+import getAvatar from '@/lib/getAvatar';
+import NextImage from 'next/image';
+import { useEffect, useState } from 'react';
 
 const Avatar = ({ name }: Readonly<{ name: string }>) => {
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  useEffect(() => {
+    getAvatar(name, 48, 48).then((res) => {
+      const blob = new Blob([res], { type: 'mimeType' });
+      const url = URL.createObjectURL(blob);
+
+      setImageSrc(url);
+    });
+  }, [name]);
+
   return (
     <figure>
-      <Image
-        // src={avatars.getInitials(name, 48, 48)}
-        src='/avatar.jpg'
+      <NextImage
+        src={imageSrc ? imageSrc : '/avatar.jpg'}
         alt={name}
         width={48}
         height={48}

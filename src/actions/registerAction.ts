@@ -1,13 +1,15 @@
 'use server';
 
-import { account } from '@/lib/appwrite';
+import { createMainClient } from '@/lib/appwrite';
 import generateID from '@/utils/generateID';
+import loginAction from './loginAction';
 
 const registerAction = async (
   email: string,
   password: string,
   name: string,
 ) => {
+  const { account } = await createMainClient();
   // Create an account with the email, password and name
   try {
     await account.create(generateID(), email, password, name);
@@ -19,21 +21,6 @@ const registerAction = async (
       };
   }
 
-  // login the user with the email, password and redirect to homepage
-  try {
-    await account.createEmailPasswordSession(email, password);
-  } catch (err) {
-    if (err instanceof Error) {
-      return {
-        success: false,
-        message: err.message,
-      };
-    }
-  } finally {
-    return {
-      success: true,
-      message: '',
-    };
-  }
+  return await loginAction(email, password);
 };
 export default registerAction;
