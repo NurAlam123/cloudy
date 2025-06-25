@@ -8,6 +8,7 @@ import { cn } from '@/utils';
 import { IconButton } from './Button';
 import { useEffect, useState } from 'react';
 import getConversations from '@/lib/getConversations';
+import Link from 'next/link';
 
 const Sidebar = () => {
   const openSidebar = useSidebarStore((state) => state.openSidebar);
@@ -61,7 +62,7 @@ const Sidebar = () => {
             draggable={false}
             className='dark:block hidden'
           />
-          <p>New Chat</p>
+          <Link href='/'>New Chat</Link>
         </button>
         <div>
           <p className='text-title-small h-9 grid items-center px-4'>

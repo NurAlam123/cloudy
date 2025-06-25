@@ -29,7 +29,7 @@ const TopAppBar = () => {
   };
 
   return (
-    <header className='relative flex justify-between items-center h-16 px-4'>
+    <header className='relative flex justify-between items-center h-16'>
       <div className='flex items-center gap-1'>
         <IconButton
           title='menu'
