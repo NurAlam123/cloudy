@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #f5fbf7;
@@ -423,6 +424,66 @@ body {
     letter-spacing: 0.5px;
     @apply text-light-onSurface dark:text-dark-onSurface relative grow mx-4 py-3 max-h-[230px] overflow-y-auto whitespace-pre-wrap outline-none
     after:content-[attr(data-placeholder)] after:text-light-onSurfaceVariant after:dark:text-dark-onSurfaceVariant after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:pointer-events-none;
+  }
+
+  /* Markdown */
+  .markdown-content {
+    @apply prose text-light-onSurface dark:text-dark-onSurface leading-7 pt-1 prose-strong:text-light-onSurface dark:prose-strong:text-dark-onSurface first:!mt-0 prose-headings:font-semibold prose-headings:mt-8 prose-headings:mb-4 prose-pre:my-4 prose-p:my-4 prose-table:my-4 prose-strong:inline prose-a:inline;
+  }
+
+  .markdown-content :where(h1, h2, h3, h4, h5, h6) {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+  }
+
+  .markdown-content code {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    @apply inline-block text-light-onSurfaceVariant dark:text-dark-onSurfaceVariant bg-light-surfaceContainerHigh dark:bg-dark-surfaceContainerHigh rounded-md py-[1px] px-1.5;
+  }
+
+  .markdown-content strong code {
+    @apply text-light-onSurface dark:text-dark-onSurface font-semibold;
+  }
+
+  .markdown-content code::after {
+    content: '';
+  }
+
+  .markdown-content code::before {
+    content: '';
+  }
+
+  .markdown-content pre code {
+    @apply block py-2 px-3 bg-transparent overflow-x-auto;
+  }
+
+  .markdown-content table {
+    @apply bg-light-surfaceContainer dark:bg-dark-surfaceContainer block min-w-max overflow-auto rounded-lg;
+  }
+
+  .markdown-content table tr th {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    @apply p-4 text-left whitespace-nowrap text-light-onSurface dark:text-dark-onSurface;
+  }
+
+  .markdown-content table td {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    @apply py-3 px-4 border-t-[1px] border-solid border-light-surfaceContainerHigh dark:border-dark-surfaceContainerHigh;
+  }
+
+  .markdown-content a {
+    @apply text-light-primary dark:text-dark-primary underline break-words;
   }
 }
 

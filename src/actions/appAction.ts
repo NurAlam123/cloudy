@@ -43,6 +43,8 @@ const userPromptAction = async (prompt: string) => {
       conversations: conversation?.$id,
     },
   );
+
+  return conversation?.$id;
 };
 
 const appAction = async ({
@@ -53,8 +55,10 @@ const appAction = async ({
   requestType: 'user_prompt';
 }) => {
   if (requestType === 'user_prompt') {
-    await userPromptAction(prompt);
+    return await userPromptAction(prompt);
   }
+
+  return;
 };
 
 export default appAction;

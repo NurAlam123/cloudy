@@ -1,13 +1,17 @@
 'use client';
 
 import getAvatar from '@/lib/getAvatar';
+import getUser from '@/lib/getUser';
 import NextImage from 'next/image';
 import { useEffect, useState } from 'react';
 
-const Avatar = ({ name }: Readonly<{ name: string }>) => {
+const Avatar = () => {
   const [imageSrc, setImageSrc] = useState<string>('');
+  const [name, setName] = useState<string>('User');
 
   useEffect(() => {
+    getUser().then((res) => res && setName(res.name));
+
     getAvatar(name, 48, 48).then((res) => {
       const blob = new Blob([res], { type: 'mimeType' });
       const url = URL.createObjectURL(blob);

@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import useSidebarStore from '@/store/useSidebarStore';
 import logoutAction from '@/actions/logoutAction';
 import { toast } from 'sonner';
+import ThemeToggler from './ThemeToggler';
 
 const TopAppBar = () => {
   const router = useRouter();
@@ -46,12 +47,13 @@ const TopAppBar = () => {
         <Logo width='w-7 h-7 min-w-7 min-h-7' />
       </div>
 
-      <div className='menu-wrapper'>
+      <div className='menu-wrapper flex gap-4'>
+        <ThemeToggler />
         <IconButton
           title='menu'
           onClick={() => setToggleMenuItem(!toggleMenuItem)}
         >
-          <Avatar name='Nur Alam' />
+          <Avatar />
         </IconButton>
 
         <Menu className={cn(toggleMenuItem && 'active')}>

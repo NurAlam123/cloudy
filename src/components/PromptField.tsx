@@ -5,6 +5,7 @@ import { IconButton } from './Button';
 import { useCallback, useRef, useState } from 'react';
 import { cn } from '@/utils';
 import appAction from '@/actions/appAction';
+import { useRouter } from 'next/navigation';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
@@ -12,6 +13,8 @@ const PromptField = () => {
   const [placeholderShown, setPlaceholderShown] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>('');
   const [submitting, setSubmitting] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const promptFieldVariant: Variants = {
     hidden: { scaleX: 0 },
@@ -80,7 +83,7 @@ const PromptField = () => {
 
     setSubmitting(true);
 
-    await appAction({
+    const conversationID = await appAction({
       prompt: inputValue,
       requestType: 'user_prompt',
     });
@@ -89,7 +92,8 @@ const PromptField = () => {
 
     inputField.current.innerHTML = '';
     handleInputChagne();
-  }, [handleInputChagne, inputValue, submitting]);
+    router.push(`/chat/${conversationID}`);
+  }, [handleInputChagne, inputValue, submitting, router]);
 
   return (
     <motion.div
