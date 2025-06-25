@@ -4,6 +4,7 @@ import { motion, Variants } from 'motion/react';
 import { IconButton } from './Button';
 import { useCallback, useRef, useState } from 'react';
 import { cn } from '@/utils';
+import appAction from '@/actions/appAction';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
@@ -72,12 +73,19 @@ const PromptField = () => {
   );
 
   // Handle submit
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     if (!inputField.current) return;
 
     if (!inputValue || submitting) return;
 
-    // setSubmitting(true);
+    setSubmitting(true);
+
+    await appAction({
+      prompt: inputValue,
+      requestType: 'user_prompt',
+    });
+
+    setSubmitting(false);
 
     inputField.current.innerHTML = '';
     handleInputChagne();
