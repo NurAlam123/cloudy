@@ -1,9 +1,14 @@
+'use client';
+
+import useAuthStore from '@/store/useAuthStore';
 import Avatar from './Avatar';
 
 const UserPrompt = ({ text }: { text: string }) => {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <div className='grid grid-cols-1 items-center gap-1 py-2 md:grid-cols-[max-content,minmax(0,1fr),max-content] md:gap-2'>
-      <Avatar />
+      <Avatar name={user?.name || 'User'} />
 
       <p className='text-body-large pt-1 whitespace-pre-wrap'>{text}</p>
     </div>

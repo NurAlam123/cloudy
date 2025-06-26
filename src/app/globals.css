@@ -401,7 +401,7 @@ body {
   /* Sidebar */
 
   .sidebar {
-    @apply fixed top-0 left-0 h-dvh text-light-onSurface dark:text-dark-onSurface bg-light-surfaceContainerLow dark:bg-dark-surfaceContainerLow z-40 max-w-[80vw] w-0 rounded-e-lg shadow-elevation1 overflow-hidden transition-[width] duration-150 ease-emphasized sm:max-w-[320px] lg:opacity-100 lg:visible lg:w-full lg:shadow-none lg:rounded-none;
+    @apply fixed top-0 left-0 h-dvh text-light-onSurface dark:text-dark-onSurface bg-light-surfaceContainerLow dark:bg-dark-surfaceContainerLow z-40 max-w-[80vw] w-0 rounded-e-lg shadow-elevation1 overflow-hidden transition-[width] duration-150 ease-emphasized sm:max-w-[320px] md:max-w-[50vw] lg:opacity-100 lg:visible lg:w-full lg:shadow-none lg:rounded-none;
   }
 
   .sidebar.active {

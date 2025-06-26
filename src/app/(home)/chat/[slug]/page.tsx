@@ -1,6 +1,7 @@
 import AiResponse from '@/components/AiResponse';
 import UserPrompt from '@/components/UserPrompt';
-import getConversation from '@/lib/getConversation';
+import { getConversation } from '@/lib/database';
+// import getConversation from '@/lib/getConversation';
 
 interface Chat {
   user_prompt: string;
@@ -10,8 +11,9 @@ interface Chat {
 
 const ChatPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const data = await getConversation(slug);
   let chats: Chat[] = [];
+
+  const data = await getConversation(slug);
 
   if (data) chats = data.chats;
 

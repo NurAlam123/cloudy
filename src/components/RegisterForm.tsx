@@ -8,10 +8,15 @@ import { useRouter } from 'next/navigation';
 import Form from 'next/form';
 import { CircularProgress } from './ProgressBar';
 import { toast } from 'sonner';
+import useAuthStore from '@/store/useAuthStore';
+import { getLoggedInUser, getUserAvatarInitials } from '@/lib/appwrite';
 
 const RegisterForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const setUser = useAuthStore((state) => state.setUser);
+  const setAvatar = useAuthStore((state) => state.setAvatar);
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +32,17 @@ const RegisterForm = () => {
     const res = await registerAction(email, password, name);
 
     if (res.success) {
+      const user = await getLoggedInUser();
+      setUser(user);
+
+      const avatar = await getUserAvatarInitials({
+        name: user?.name,
+        width: 48,
+        height: 48,
+      });
+
+      setAvatar({ name: user?.name || 'User', data: avatar });
+
       setLoading(false);
       router.push('/');
     } else {

@@ -1,18 +1,10 @@
 'use client';
 
-import getUser from '@/lib/getUser';
+import useAuthStore from '@/store/useAuthStore';
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
 
 const Greetings = () => {
-  const [name, setName] = useState('');
-
-  useEffect(() => {
-    getUser().then((res) => {
-      if (!res) return;
-      setName(res.name);
-    });
-  }, [name]);
+  const user = useAuthStore((state) => state.user);
 
   return (
     <div
@@ -33,7 +25,7 @@ const Greetings = () => {
           }}
           className='bg-gradient-to-r from-teal-400 from-0% via-cyan-500 via-56% to-transparent to-75% bg-clip-text text-transparent bg-[length:350%_100%] bg-[100%_0]'
         >
-          Hello, {name || 'User'}
+          Hello, {user?.name || 'User'}
         </motion.span>
         <br />
         <motion.span

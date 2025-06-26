@@ -2,21 +2,38 @@
 
 import Image from 'next/image';
 import { IconButton } from './Button';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/utils';
-import deleteConversation from '@/lib/deleteConversation';
 import { toast } from 'sonner';
+import { deleteConversation } from '@/lib/database';
+import useSidebarStore from '@/store/useSidebarStore';
 
-const NavLink = ({ href, title }: { href: string; title: string }) => {
+const NavLink = ({
+  href,
+  title,
+  conversationID,
+}: {
+  href: string;
+  title: string;
+  conversationID: string;
+}) => {
+  const router = useRouter();
   const pathname = usePathname();
   const isActive = pathname === href;
-  const id = pathname.replace('/chat/', '');
+
+  const setRefresh = useSidebarStore((state) => state.setRefresh);
 
   const deleteChat = async () => {
-    const res = await deleteConversation(id);
+    const res = await deleteConversation(conversationID);
 
-    if (res) toast('Successfully deleted a conversation');
+    if (res) {
+      if (isActive) {
+        router.push('/');
+      }
+      toast('Successfully deleted a conversation');
+      setRefresh(true);
+    }
   };
 
   return (

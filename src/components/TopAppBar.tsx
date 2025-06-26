@@ -12,8 +12,9 @@ import useSidebarStore from '@/store/useSidebarStore';
 import logoutAction from '@/actions/logoutAction';
 import { toast } from 'sonner';
 import ThemeToggler from './ThemeToggler';
+import { Models } from 'node-appwrite';
 
-const TopAppBar = () => {
+const TopAppBar = ({ user }: { user: Models.User<Models.Preferences> }) => {
   const router = useRouter();
 
   const [toggleMenuItem, setToggleMenuItem] = useState(false);
@@ -53,7 +54,7 @@ const TopAppBar = () => {
           title='menu'
           onClick={() => setToggleMenuItem(!toggleMenuItem)}
         >
-          <Avatar />
+          <Avatar name={user.name} />
         </IconButton>
 
         <Menu className={cn(toggleMenuItem && 'active')}>

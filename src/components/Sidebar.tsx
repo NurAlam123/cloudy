@@ -7,22 +7,30 @@ import useSidebarStore from '@/store/useSidebarStore';
 import { cn } from '@/utils';
 import { IconButton } from './Button';
 import { useEffect, useState } from 'react';
-import getConversations from '@/lib/getConversations';
 import Link from 'next/link';
+import { getAllConversation } from '@/lib/database';
+import { Models } from 'node-appwrite';
 
-const Sidebar = () => {
+const Sidebar = ({ user }: { user: Models.User<Models.Preferences> }) => {
   const openSidebar = useSidebarStore((state) => state.openSidebar);
   const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
   const [conversations, setConversations] = useState<
     { title: string; $id: string }[] | null
   >(null);
 
+  const refresh = useSidebarStore((state) => state.refresh);
+  const setRefresh = useSidebarStore((state) => state.setRefresh);
+
   useEffect(() => {
-    getConversations().then((res) => {
-      if (!res) return;
-      setConversations(res.documents as []);
-    });
-  }, []);
+    (async () => {
+      if (refresh) {
+        const res = await getAllConversation(user.$id);
+        setConversations(res?.documents as []);
+      } else {
+        setRefresh(false);
+      }
+    })();
+  }, [user, refresh, setRefresh]);
 
   return (
     <div className={cn('sidebar h-full hidden', openSidebar && 'active block')}>
@@ -77,6 +85,7 @@ const Sidebar = () => {
                 key={id}
                 href={`/chat/${id}`}
                 title={title}
+                conversationID={id}
               />
             ))}
           </nav>
