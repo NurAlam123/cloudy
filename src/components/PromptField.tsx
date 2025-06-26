@@ -4,8 +4,11 @@ import { motion, Variants } from 'motion/react';
 import { IconButton } from './Button';
 import { useCallback, useRef, useState } from 'react';
 import { cn } from '@/utils';
-import appAction from '@/actions/appAction';
+import { createResponse, setTitle } from '@/actions/appAction';
 import { useRouter } from 'next/navigation';
+import useAppStore from '@/store/useAppStore';
+import { Payload } from '@/lib/types';
+import useSidebarStore from '@/store/useSidebarStore';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
@@ -13,6 +16,11 @@ const PromptField = () => {
   const [placeholderShown, setPlaceholderShown] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>('');
   const [submitting, setSubmitting] = useState<boolean>(false);
+
+  const setPromptSubmitting = useAppStore((state) => state.setPromptSubmitting);
+  const setPayload = useAppStore((state) => state.setPayload);
+
+  const toggleRefresh = useSidebarStore((state) => state.toggleRefresh);
 
   const router = useRouter();
 
@@ -82,18 +90,38 @@ const PromptField = () => {
     if (!inputValue || submitting) return;
 
     setSubmitting(true);
+    setPromptSubmitting(true);
 
-    const conversationID = await appAction({
+    const payload: Payload = {
       prompt: inputValue,
       requestType: 'user_prompt',
-    });
+    };
 
+    const conversation = await setTitle(payload);
+
+    setPayload(payload);
     setSubmitting(false);
+
+    if (conversation) createResponse(payload, conversation.$id);
 
     inputField.current.innerHTML = '';
     handleInputChagne();
-    router.push(`/chat/${conversationID}`);
-  }, [handleInputChagne, inputValue, submitting, router]);
+
+    if (conversation) {
+      router.push(`/chat/${conversation.$id}`);
+      toggleRefresh();
+    } else {
+      router.push('/');
+    }
+  }, [
+    handleInputChagne,
+    inputValue,
+    submitting,
+    router,
+    setPayload,
+    setPromptSubmitting,
+    toggleRefresh,
+  ]);
 
   return (
     <motion.div

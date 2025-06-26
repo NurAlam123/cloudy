@@ -22,17 +22,19 @@ const NavLink = ({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  const setRefresh = useSidebarStore((state) => state.setRefresh);
+  const toggleRefresh = useSidebarStore((state) => state.toggleRefresh);
 
   const deleteChat = async () => {
     const res = await deleteConversation(conversationID);
 
     if (res) {
-      if (isActive) {
-        router.push('/');
-      }
       toast('Successfully deleted a conversation');
-      setRefresh(true);
+
+      toggleRefresh();
+
+      if (isActive) {
+        return router.push('/');
+      } else return;
     }
   };
 

@@ -1,6 +1,6 @@
 'use server';
 
-import { Query } from 'node-appwrite';
+import { Models, Query } from 'node-appwrite';
 import { createSessionClient } from './appwrite';
 
 // Get all the conversation of the user form database
@@ -52,6 +52,30 @@ export async function deleteConversation(conversationID: string) {
       conversationID,
     );
     return data;
+  } catch (err) {
+    console.error(err);
+    return;
+  }
+}
+
+// Create conversation
+export async function createConversation({
+  id,
+  data,
+  collectionName,
+}: {
+  id: string;
+  collectionName: 'conversation' | 'chats';
+  data: Partial<Models.Document>;
+}) {
+  try {
+    const { database } = await createSessionClient();
+    return await database.createDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+      collectionName,
+      id,
+      data,
+    );
   } catch (err) {
     console.error(err);
     return;

@@ -1,6 +1,7 @@
 'use client';
 
 import { getUserAvatarInitials } from '@/lib/appwrite';
+import useAppStore from '@/store/useAppStore';
 import useAuthStore from '@/store/useAuthStore';
 import { Models } from 'node-appwrite';
 import { useEffect } from 'react';
@@ -18,6 +19,9 @@ const MainContent = ({
   const setAvatar = useAuthStore((state) => state.setAvatar);
   const authUser = useAuthStore((state) => state.user);
 
+  const promptSubmitting = useAppStore((state) => state.promptSubmitting);
+
+  // Initiate auth data
   useEffect(() => {
     if (!authUser) {
       setUser(user);
@@ -32,7 +36,11 @@ const MainContent = ({
     }
   }, [setUser, user, authUser, setAvatar]);
 
-  return <main className={className}>{children}</main>;
+  return (
+    <main className={className}>
+      {promptSubmitting ? 'LOADING...' : children}
+    </main>
+  );
 };
 
 export default MainContent;

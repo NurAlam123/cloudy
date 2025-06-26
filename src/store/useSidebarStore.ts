@@ -5,7 +5,7 @@ type SidebarStore = {
   refresh: boolean;
   toggleSidebar: () => void;
   setOpenSidebar: (value: boolean) => void;
-  setRefresh: (value: boolean) => void;
+  toggleRefresh: () => void;
 };
 
 const useSidebarStore = create<SidebarStore>((set) => ({
@@ -17,8 +17,10 @@ const useSidebarStore = create<SidebarStore>((set) => ({
   setOpenSidebar: (value: boolean) => {
     set({ openSidebar: value });
   },
-  setRefresh: (value: boolean) => {
-    set({ refresh: value });
+  toggleRefresh: () => {
+    set((state) => ({
+      refresh: !state.refresh,
+    }));
   },
 }));
 

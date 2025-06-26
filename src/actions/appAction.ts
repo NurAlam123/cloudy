@@ -1,65 +1,54 @@
 'use server';
 
-// import { createMainClient } from '@/lib/appwrite';
-// import getUser from '@/lib/getUser';
+import { getLoggedInUser } from '@/lib/appwrite';
+import { createConversation } from '@/lib/database';
 import { getAiResponse, getConversationTitle } from '@/lib/googleAi';
-// import generateID from '@/utils/generateID';
+import { Payload } from '@/lib/types';
+import generateID from '@/utils/generateID';
 
-const userPromptAction = async (prompt: string) => {
-  // Get current user
-  // const { database } = await createMainClient();
-  // const user = await getUser();
-
+export const setTitle = async (payload: Payload) => {
   // get conversation title
-  const conversationTitle = await getConversationTitle(prompt);
-  const conversation = null;
+  const conversationTitle = await getConversationTitle(payload.prompt);
 
+  let conversation = null;
+
+  // Store title
   try {
-    // conversation = await database.createDocument(
-    //   process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-    //   'conversation',
-    //   generateID(),
-    //   {
-    //     title: conversationTitle,
-    //     user_id: user?.$id,
-    //   },
-    // );
+    const user = await getLoggedInUser();
+    if (!user || !conversationTitle) return;
+
+    conversation = await createConversation({
+      collectionName: 'conversation',
+      id: generateID(),
+      data: {
+        title: conversationTitle,
+        user_id: user.$id,
+      },
+    });
   } catch (err) {
     console.error(err);
   }
 
-  // Generate an AI response
-  const aiResponse = await getAiResponse(prompt);
-
-  // Create a new chat document in the 'chats' collection
-
-  // await database.createDocument(
-  //   process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-  //   'chats',
-  //   generateID(),
-  //   {
-  //     user_prompt: prompt,
-  //     ai_response: aiResponse,
-  //     conversations: conversation?.$id,
-  //   },
-  // );
-
-  // return conversation?.$id;
   return conversation;
 };
 
-const appAction = async ({
-  prompt,
-  requestType,
-}: {
-  prompt: string;
-  requestType: 'user_prompt';
-}) => {
-  if (requestType === 'user_prompt') {
-    return await userPromptAction(prompt);
-  }
+export const createResponse = async (
+  payload: Payload,
+  conversationID: string,
+) => {
+  // Generate an AI response
+  const aiResponse = await getAiResponse(payload.prompt);
 
-  return;
+  // Create a new chat document in the 'chats' collection
+  await createConversation({
+    id: generateID(),
+    collectionName: 'chats',
+    data: {
+      user_prompt: payload.prompt,
+      ai_response: aiResponse,
+      conversations: conversationID,
+    },
+  });
+
+  return aiResponse;
 };
-
-export default appAction;

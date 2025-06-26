@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getAllConversation } from '@/lib/database';
 import { Models } from 'node-appwrite';
+import useAppStore from '@/store/useAppStore';
 
 const Sidebar = ({ user }: { user: Models.User<Models.Preferences> }) => {
   const openSidebar = useSidebarStore((state) => state.openSidebar);
@@ -19,18 +20,15 @@ const Sidebar = ({ user }: { user: Models.User<Models.Preferences> }) => {
   >(null);
 
   const refresh = useSidebarStore((state) => state.refresh);
-  const setRefresh = useSidebarStore((state) => state.setRefresh);
+  const setPromptSubmitting = useAppStore((state) => state.setPromptSubmitting);
 
   useEffect(() => {
     (async () => {
-      if (refresh) {
-        const res = await getAllConversation(user.$id);
-        setConversations(res?.documents as []);
-      } else {
-        setRefresh(false);
-      }
+      const res = await getAllConversation(user.$id);
+      setConversations(res?.documents as []);
+      setPromptSubmitting(false);
     })();
-  }, [user, refresh, setRefresh]);
+  }, [user, refresh, setPromptSubmitting]);
 
   return (
     <div className={cn('sidebar h-full hidden', openSidebar && 'active block')}>
