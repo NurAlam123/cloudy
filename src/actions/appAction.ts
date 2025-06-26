@@ -36,13 +36,13 @@ export const createResponse = async (
   payload: Payload,
   conversationID: string,
 ) => {
-  const conversation = await getConversation(conversationID);
+  // const conversation = await getConversation(conversationID);
 
-  let conversations = [];
-  if (conversation) conversations = conversation.chats;
+  // let conversations = [];
+  // if (conversation) conversations = conversation.chats;
 
   // Generate an AI response
-  const aiResponse = await getAiResponse(payload.prompt, conversations);
+  const aiResponse = await getAiResponse(payload.prompt, []);
 
   // Create a new chat document in the 'chats' collection
   await createConversation({

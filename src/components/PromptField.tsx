@@ -9,7 +9,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import useAppStore from '@/store/useAppStore';
 import { Payload } from '@/lib/types';
 import useSidebarStore from '@/store/useSidebarStore';
-import { match } from 'assert';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
