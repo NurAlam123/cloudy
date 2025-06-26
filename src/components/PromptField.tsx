@@ -117,13 +117,9 @@ const PromptField = () => {
     inputField.current.innerHTML = '';
     handleInputChagne();
 
-    if (isConversation) {
-      if (!(pathname === `/chat/${conversationID}`)) {
-        router.push(`/chat/${conversationID}`);
-        toggleRefresh();
-      } else {
-        toggleRefresh();
-      }
+    if (!isConversation) {
+      router.push(`/chat/${conversationID}`);
+      toggleRefresh();
     } else {
       router.push('/');
     }
