@@ -99,17 +99,12 @@ const PromptField = () => {
       requestType: 'user_prompt',
     };
 
-    const isConversation = pathname.match(/^\/chat\/([^\/]+)$/);
-    let conversationID = null;
+    // const isConversation = pathname.match(/^\/chat\/([^\/]+)$/);
+    // let conversationID = null;
 
-    if (!isConversation) {
-      const conversation = await setTitle(payload);
-      conversationID = conversation?.$id ?? null;
-    } else {
-      conversationID = isConversation[1];
-    }
-
-    if (conversationID) createResponse(payload, conversationID);
+    const conversation = await setTitle(payload);
+    const conversationID = conversation?.$id ?? '';
+    if (conversation) createResponse(payload, conversationID);
 
     setPayload(payload);
     setSubmitting(false);
@@ -117,7 +112,7 @@ const PromptField = () => {
     inputField.current.innerHTML = '';
     handleInputChagne();
 
-    if (!isConversation) {
+    if (conversation) {
       router.push(`/chat/${conversationID}`);
       toggleRefresh();
     } else {
@@ -131,7 +126,6 @@ const PromptField = () => {
     setPayload,
     setPromptSubmitting,
     toggleRefresh,
-    pathname,
   ]);
 
   return (
