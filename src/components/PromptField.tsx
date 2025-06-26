@@ -5,10 +5,11 @@ import { IconButton } from './Button';
 import { useCallback, useRef, useState } from 'react';
 import { cn } from '@/utils';
 import { createResponse, setTitle } from '@/actions/appAction';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import useAppStore from '@/store/useAppStore';
 import { Payload } from '@/lib/types';
 import useSidebarStore from '@/store/useSidebarStore';
+import { match } from 'assert';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
@@ -16,6 +17,8 @@ const PromptField = () => {
   const [placeholderShown, setPlaceholderShown] = useState<boolean>(true);
   const [inputValue, setInputValue] = useState<string>('');
   const [submitting, setSubmitting] = useState<boolean>(false);
+
+  const pathname = usePathname();
 
   const setPromptSubmitting = useAppStore((state) => state.setPromptSubmitting);
   const setPayload = useAppStore((state) => state.setPayload);
@@ -97,19 +100,31 @@ const PromptField = () => {
       requestType: 'user_prompt',
     };
 
-    const conversation = await setTitle(payload);
+    const isConversation = pathname.match(/^\/chat\/([^\/]+)$/);
+    let conversationID = null;
+
+    if (!isConversation) {
+      const conversation = await setTitle(payload);
+      conversationID = conversation?.$id ?? null;
+    } else {
+      conversationID = isConversation[1];
+    }
+
+    if (conversationID) createResponse(payload, conversationID);
 
     setPayload(payload);
     setSubmitting(false);
 
-    if (conversation) createResponse(payload, conversation.$id);
-
     inputField.current.innerHTML = '';
     handleInputChagne();
 
-    if (conversation) {
-      router.push(`/chat/${conversation.$id}`);
-      toggleRefresh();
+    if (isConversation) {
+      if (!(pathname === `/chat/${conversationID}`)) {
+        router.push(`/chat/${conversationID}`);
+        toggleRefresh();
+      } else {
+        toggleRefresh();
+      }
     } else {
       router.push('/');
     }
@@ -121,6 +136,7 @@ const PromptField = () => {
     setPayload,
     setPromptSubmitting,
     toggleRefresh,
+    pathname,
   ]);
 
   return (

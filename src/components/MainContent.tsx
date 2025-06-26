@@ -5,6 +5,7 @@ import useAppStore from '@/store/useAppStore';
 import useAuthStore from '@/store/useAuthStore';
 import { Models } from 'node-appwrite';
 import { useEffect } from 'react';
+import { CircularProgress } from './ProgressBar';
 
 const MainContent = ({
   className,
@@ -38,7 +39,16 @@ const MainContent = ({
 
   return (
     <main className={className}>
-      {promptSubmitting ? 'LOADING...' : children}
+      {promptSubmitting ? (
+        <div className='h-full flex justify-center items-center'>
+          <CircularProgress
+            size='h-16 w-16'
+            className='border-6'
+          />
+        </div>
+      ) : (
+        children
+      )}
     </main>
   );
 };

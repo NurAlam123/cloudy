@@ -4,7 +4,7 @@ const CircularProgress = ({
   className,
   size,
 }: {
-  className: string;
+  className?: string;
   size?: string;
 }) => {
   return (

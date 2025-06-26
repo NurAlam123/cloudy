@@ -1,7 +1,7 @@
 'use server';
 
 import { getLoggedInUser } from '@/lib/appwrite';
-import { createConversation } from '@/lib/database';
+import { createConversation, getConversation } from '@/lib/database';
 import { getAiResponse, getConversationTitle } from '@/lib/googleAi';
 import { Payload } from '@/lib/types';
 import generateID from '@/utils/generateID';
@@ -36,8 +36,13 @@ export const createResponse = async (
   payload: Payload,
   conversationID: string,
 ) => {
+  const conversation = await getConversation(conversationID);
+
+  let conversations = [];
+  if (conversation) conversations = conversation.chats;
+
   // Generate an AI response
-  const aiResponse = await getAiResponse(payload.prompt);
+  const aiResponse = await getAiResponse(payload.prompt, conversations);
 
   // Create a new chat document in the 'chats' collection
   await createConversation({
