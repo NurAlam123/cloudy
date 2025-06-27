@@ -2,6 +2,7 @@
 
 import { Models, Query } from 'node-appwrite';
 import { createSessionClient } from './appwrite';
+import { notFound } from 'next/navigation';
 
 // Get all the conversation of the user form database
 export async function getAllConversation(userID: string) {
@@ -36,9 +37,8 @@ export async function getConversation(conversationID: string) {
       conversationID,
     );
     return data;
-  } catch (err) {
-    console.error(err);
-    return;
+  } catch {
+    notFound();
   }
 }
 
@@ -52,9 +52,8 @@ export async function deleteConversation(conversationID: string) {
       conversationID,
     );
     return data;
-  } catch (err) {
-    console.error(err);
-    return;
+  } catch {
+    notFound();
   }
 }
 

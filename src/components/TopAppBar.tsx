@@ -54,7 +54,7 @@ const TopAppBar = ({ user }: { user: Models.User<Models.Preferences> }) => {
           title='menu'
           onClick={() => setToggleMenuItem(!toggleMenuItem)}
         >
-          <Avatar name={user.name} />
+          <Avatar />
         </IconButton>
 
         <Menu className={cn(toggleMenuItem && 'active')}>
