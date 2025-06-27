@@ -3,7 +3,7 @@
 import { getLoggedInUser } from '@/lib/appwrite';
 import { createConversation, getConversation } from '@/lib/database';
 import { getAiResponse, getConversationTitle } from '@/lib/googleAi';
-import { Payload } from '@/lib/types';
+import { Chat, ChatHistroy, Payload } from '@/lib/types';
 import generateID from '@/utils/generateID';
 
 export const setTitle = async (payload: Payload) => {
@@ -36,13 +36,25 @@ export const createResponse = async (
   payload: Payload,
   conversationID: string,
 ) => {
-  // const conversation = await getConversation(conversationID);
+  const conversation = await getConversation(conversationID);
 
-  // let conversations = [];
-  // if (conversation) conversations = conversation.chats;
+  const conversations: ChatHistroy[] = [];
+
+  if (conversation) {
+    conversation.chats.map((chat: Chat) => {
+      conversations.push({
+        role: 'user',
+        parts: [{ text: chat.user_prompt }],
+      });
+      conversations.push({
+        role: 'model',
+        parts: [{ text: chat.ai_response }],
+      });
+    });
+  }
 
   // Generate an AI response
-  const aiResponse = await getAiResponse(payload.prompt, []);
+  const aiResponse = await getAiResponse(payload.prompt, conversations);
 
   // Create a new chat document in the 'chats' collection
   await createConversation({

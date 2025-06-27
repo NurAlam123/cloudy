@@ -458,8 +458,16 @@ body {
     content: '';
   }
 
+  pre {
+    @appy overflow-y-hidden;
+  }
+
+  .markdown-content pre {
+    @apply !bg-transparent !px-0 !py-0 !overflow-y-hidden;
+  }
+
   .markdown-content pre code {
-    @apply block py-2 px-3 bg-transparent overflow-x-auto;
+    @apply block py-2 px-3 bg-transparent overflow-x-auto text-light-onSecondary;
   }
 
   .markdown-content table {
@@ -484,6 +492,14 @@ body {
 
   .markdown-content a {
     @apply text-light-primary dark:text-dark-primary underline break-words;
+  }
+
+  .markdown-content .code-block {
+    @apply bg-dark-surfaceContainer rounded-t-md rounded-b-sm mb-0.5 overflow-hidden;
+  }
+
+  .markdown-content .code-block * {
+    @apply !bg-inherit;
   }
 }
 

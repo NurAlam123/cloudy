@@ -9,7 +9,12 @@ const ChatPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   if (data) chats = data.chats;
 
-  return <ChatContainer chats={chats} />;
+  return (
+    <ChatContainer
+      chats={chats}
+      conversationID={slug}
+    />
+  );
 };
 
 export default ChatPage;

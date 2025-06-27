@@ -1,4 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
+import { ChatHistroy } from './types';
 
 const GEMINI_MODEL = 'gemini-2.0-flash';
 
@@ -20,7 +21,10 @@ Prompt: ${prompt}`,
   }
 };
 
-export const getAiResponse = async (prompt: string, history = []) => {
+export const getAiResponse = async (
+  prompt: string,
+  history: ChatHistroy[] = [],
+) => {
   try {
     const chats = genAI.chats.create({
       model: GEMINI_MODEL,

@@ -9,3 +9,10 @@ export interface Chat {
   $id?: string;
   conversations?: string;
 }
+
+export interface ChatHistroy {
+  role: string;
+  parts: {
+    text: string;
+  }[];
+}

@@ -4,11 +4,10 @@ import { motion, Variants } from 'motion/react';
 import { IconButton } from './Button';
 import { useCallback, useRef, useState } from 'react';
 import { cn } from '@/utils';
-import { createResponse, setTitle } from '@/actions/appAction';
+import { setTitle } from '@/actions/appAction';
 import { usePathname, useRouter } from 'next/navigation';
 import useAppStore from '@/store/useAppStore';
 import { Payload } from '@/lib/types';
-import useSidebarStore from '@/store/useSidebarStore';
 
 const PromptField = () => {
   const inputField = useRef<HTMLDivElement>(null);
@@ -21,8 +20,6 @@ const PromptField = () => {
 
   const setPromptSubmitting = useAppStore((state) => state.setPromptSubmitting);
   const setPayload = useAppStore((state) => state.setPayload);
-
-  const toggleRefresh = useSidebarStore((state) => state.toggleRefresh);
 
   const router = useRouter();
 
@@ -99,25 +96,36 @@ const PromptField = () => {
       requestType: 'user_prompt',
     };
 
-    // const isConversation = pathname.match(/^\/chat\/([^\/]+)$/);
-    // let conversationID = null;
-
-    const conversation = await setTitle(payload);
-    const conversationID = conversation?.$id ?? '';
-    if (conversation) createResponse(payload, conversationID);
-
     setPayload(payload);
+
+    const isConversationPage = pathname.match(/^\/chat\/([^\/]+)$/);
+    let conversationID = null;
+
+    if (!isConversationPage) {
+      const conversation = await setTitle(payload);
+      conversationID = conversation?.$id ?? '';
+    } else {
+      conversationID = isConversationPage[1];
+    }
+
+    const url = `/chat/${conversationID}`;
+
     setSubmitting(false);
 
     inputField.current.innerHTML = '';
     handleInputChagne();
 
-    if (conversation) {
-      router.push(`/chat/${conversationID}`);
-      toggleRefresh();
-    } else {
-      router.push('/');
+    if (!isConversationPage) {
+      if (conversationID) {
+        history.pushState({ new: false }, '', url);
+        router.push(url);
+        return;
+      } else {
+        return router.push('/');
+      }
     }
+
+    // toggleRefresh();
   }, [
     handleInputChagne,
     inputValue,
@@ -125,19 +133,22 @@ const PromptField = () => {
     router,
     setPayload,
     setPromptSubmitting,
-    toggleRefresh,
+    pathname,
   ]);
 
   return (
     <motion.div
-      className='prompt-field-container'
+      className='prompt-field-container overflow-y-hidden'
       variants={promptFieldVariant}
       initial='hidden'
       animate='visible'
       ref={inputFieldContainer}
     >
       <motion.div
-        className={cn('prompt-field', !placeholderShown && 'after:hidden')}
+        className={cn(
+          'prompt-field min-h-[40px] max-h-[200px] overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-words',
+          !placeholderShown && 'after:hidden',
+        )}
         contentEditable
         role='textbox'
         aria-multiline

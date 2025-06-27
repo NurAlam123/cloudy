@@ -23,6 +23,7 @@ const Avatar = () => {
   return (
     <figure>
       <NextImage
+        draggable='false'
         src={imageSrc}
         alt={avatar?.name}
         width={48}

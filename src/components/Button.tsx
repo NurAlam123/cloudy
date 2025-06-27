@@ -3,9 +3,10 @@
 import { cn } from '@/utils';
 import { MotionProps } from 'motion/react';
 import Image from 'next/image';
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, useCallback } from 'react';
 
 import { motion } from 'motion/react';
+import { toast } from 'sonner';
 
 // Common Button
 const Button = ({
@@ -72,4 +73,38 @@ const IconButton = ({
   );
 };
 
-export { Button, IconButton };
+const CopyButton = ({
+  text,
+  className,
+  ...rest
+}: {
+  text: string;
+  className?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>) => {
+  const copy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast('Copied to clipboard');
+    } catch (err) {
+      console.error(err);
+    }
+  }, [text]);
+
+  return (
+    <button
+      className={cn('cursor-pointer', className)}
+      onClick={copy}
+      {...rest}
+    >
+      <Image
+        src='/copy.svg'
+        alt='copy'
+        width={24}
+        height={25}
+        className='w-fit h-fit border'
+      />
+    </button>
+  );
+};
+
+export { Button, IconButton, CopyButton };

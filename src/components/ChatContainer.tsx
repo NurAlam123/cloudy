@@ -1,8 +1,24 @@
+'use client';
+
 import UserPrompt from './UserPrompt';
 import AiResponse from './AiResponse';
 import { Chat } from '@/lib/types';
+import { useEffect } from 'react';
+import useSidebarStore from '@/store/useSidebarStore';
 
-const ChatContainer = ({ chats }: { chats: Chat[] }) => {
+const ChatContainer = ({
+  chats,
+  conversationID,
+}: {
+  chats: Chat[];
+  conversationID: string;
+}) => {
+  const toggleRefresh = useSidebarStore((state) => state.toggleRefresh);
+
+  useEffect(() => {
+    const isNew = history.state.new;
+    if (isNew) toggleRefresh();
+  }, [toggleRefresh]);
   return (
     <div>
       {chats.map((chat: Chat) => (

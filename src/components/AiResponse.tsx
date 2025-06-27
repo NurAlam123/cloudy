@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import CodeBlock from './CodeBlock';
 
 const AiResponse = ({
   text,
@@ -31,7 +32,22 @@ const AiResponse = ({
       {children}
 
       <div className='markdown-content'>
-        <Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
+        <Markdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            code(props) {
+              const { children, className } = props;
+              const match = /language-(\w+)/.exec(className || '');
+              return match ? (
+                <CodeBlock match={match}>{children}</CodeBlock>
+              ) : (
+                <code className={className}>{children}</code>
+              );
+            },
+          }}
+        >
+          {text}
+        </Markdown>
       </div>
     </div>
   );
