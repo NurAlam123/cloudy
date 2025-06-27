@@ -550,6 +550,27 @@ body {
     @apply !bg-inherit;
   }
 
+  /* Markdown math -> latex */
+  .markdown-content .katex-display {
+    @apply !block !mx-4 text-center overflow-x-auto overflow-y-hidden;
+  }
+
+  .markdown-content .katex {
+    @apply text-lg;
+  }
+  .markdown-content .katex-display > .katex {
+    @apply block text-center;
+  }
+  .markdown-content p:has(.katex-display) {
+    @apply block mx-4;
+  }
+
+  .markdown-content p .katex-display {
+    @apply !mx-4 !-my-4;
+  }
+
+  /* Shimmer effect */
+
   .shimmer {
     background-size: 1000px 100%;
     @apply animate-shimmer bg-gradient-to-r from-light-surfaceContainerHighest dark:from-dark-surfaceContainerHighest from-4% via-light-inverseOnSurface dark:via-dark-inverseOnSurface via-25% to-light-surfaceContainerHigh dark:to-dark-surfaceContainerHigh to-36%;

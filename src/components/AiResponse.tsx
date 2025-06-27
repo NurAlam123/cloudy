@@ -1,9 +1,15 @@
 import Image from 'next/image';
+
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
 import CodeBlock from './CodeBlock';
 import { Suspense, useEffect, useRef } from 'react';
 import Skeleton from './Skeleton';
+
+import 'katex/dist/katex.min.css';
 
 const AiResponse = ({
   text,
@@ -57,7 +63,8 @@ const AiResponse = ({
         <div className='markdown-content'>
           <Suspense fallback={<Skeleton />}>
             <Markdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkMath]}
+              rehypePlugins={[rehypeKatex]}
               components={{
                 code: (props) => {
                   const { children, className } = props;
