@@ -20,7 +20,7 @@ export default async function HomeLayout({
         <Sidebar user={user} />
         <div className='h-dvh flex flex-col justify-between'>
           {/* Top app bar */}
-          <TopAppBar user={user} />
+          <TopAppBar />
 
           {/* Main content */}
           <MainContent
