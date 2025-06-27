@@ -59,7 +59,7 @@ const AiResponse = ({
             <Markdown
               remarkPlugins={[remarkGfm]}
               components={{
-                code(props) {
+                code: (props) => {
                   const { children, className } = props;
                   const match = /language-(\w+)/.exec(className || '');
                   return match ? (
@@ -68,6 +68,21 @@ const AiResponse = ({
                     <code className={className}>{children}</code>
                   );
                 },
+
+                table: ({ children, ...props }) => (
+                  <div className='table-wrapper'>
+                    <table {...props}>{children}</table>
+                  </div>
+                ),
+                thead: ({ children, ...props }) => (
+                  <thead {...props}>{children}</thead>
+                ),
+                tbody: ({ children, ...props }) => (
+                  <tbody {...props}>{children}</tbody>
+                ),
+                tr: ({ children, ...props }) => <tr {...props}>{children}</tr>,
+                th: ({ children, ...props }) => <th {...props}>{children}</th>,
+                td: ({ children, ...props }) => <td {...props}>{children}</td>,
               }}
             >
               {text}

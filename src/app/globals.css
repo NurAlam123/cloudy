@@ -440,7 +440,7 @@ body {
 
   /* Markdown */
   .markdown-content {
-    @apply prose text-light-onSurface dark:text-dark-onSurface leading-7 pt-1 prose-strong:text-light-onSurface dark:prose-strong:text-dark-onSurface first:!mt-0 prose-headings:font-semibold prose-headings:mt-8 prose-headings:mb-4 prose-pre:my-4 prose-p:my-4 prose-table:my-4 prose-strong:inline prose-a:inline;
+    @apply prose text-light-onSurface dark:text-dark-onSurface leading-7 pt-1 prose-strong:text-light-onSurface dark:prose-strong:text-dark-onSurface first:!mt-0 prose-headings:font-semibold prose-headings:mt-8 prose-headings:mb-4 prose-pre:my-4 prose-p:my-4 prose-table:my-4 prose-strong:inline prose-a:inline overflow-hidden;
   }
 
   .markdown-content :where(h1, h2, h3, h4, h5, h6) {
@@ -471,7 +471,7 @@ body {
   }
 
   pre {
-    @appy overflow-y-hidden;
+    @apply overflow-y-hidden;
   }
 
   .markdown-content pre {
@@ -483,23 +483,59 @@ body {
   }
 
   .markdown-content table {
-    @apply bg-light-surfaceContainer dark:bg-dark-surfaceContainer block min-w-max overflow-auto rounded-lg;
+    @apply w-full border-collapse bg-light-surfaceContainer dark:bg-dark-surfaceContainer rounded-lg overflow-hidden my-6 !block min-w-max;
+    display: table !important;
+    width: 100%;
+    border-spacing: 0;
+  }
+
+  .markdown-content table thead {
+    @apply bg-light-surfaceContainerHigh dark:bg-dark-surfaceContainerHigh;
+  }
+
+  .markdown-content table thead tr {
+    @apply border-none;
+  }
+
+  .markdown-content table tbody tr {
+    @apply border-none;
   }
 
   .markdown-content table tr th {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.15px;
-    @apply p-4 text-left whitespace-nowrap text-light-onSurface dark:text-dark-onSurface;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    @apply p-3 text-left whitespace-nowrap text-light-onSurface dark:text-dark-onSurface border-b border-light-surfaceContainerHigh dark:border-dark-surfaceContainerHigh;
+  }
+
+  .markdown-content table tr th:first-child {
+    @apply rounded-tl-lg;
+  }
+
+  .markdown-content table tr th:last-child {
+    @apply rounded-tr-lg;
   }
 
   .markdown-content table td {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.15px;
-    @apply py-3 px-4 border-t-[1px] border-solid border-light-surfaceContainerHigh dark:border-dark-surfaceContainerHigh;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    @apply py-3 px-3 border-b border-light-surfaceContainerHigh dark:border-dark-surfaceContainerHigh text-light-onSurface dark:text-dark-onSurface;
+  }
+
+  .markdown-content table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .markdown-content table {
+    @apply overflow-x-auto;
+    min-width: 100%;
+  }
+
+  .markdown-content .table-wrapper {
+    @apply overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0;
   }
 
   .markdown-content a {
