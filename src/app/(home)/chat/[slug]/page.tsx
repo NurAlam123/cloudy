@@ -1,7 +1,22 @@
 import ChatContainer from '@/components/ChatContainer';
 import { getConversation } from '@/lib/database';
+import { Metadata } from 'next';
 
-const ChatPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+interface Props {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+
+  const doc = await getConversation(slug);
+
+  return {
+    title: doc.title,
+  };
+}
+
+const ChatPage = async ({ params }: Props) => {
   const { slug } = await params;
   let chats = [];
 
