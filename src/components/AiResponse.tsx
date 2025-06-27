@@ -2,15 +2,23 @@ import Image from 'next/image';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import CodeBlock from './CodeBlock';
+import { Suspense } from 'react';
+import Skeleton from './Skeleton';
 
 const AiResponse = ({
   text,
   loading = false,
+  id,
+  lastID,
 }: {
   text: string;
   children?: React.ReactNode;
   loading?: boolean;
+  id: string;
+  lastID: string;
 }) => {
+  console.log(id, lastID);
+
   return (
     <div className='grid grid-cols-1 items-center gap-1 py-2 md:grid-cols-[max-content,minmax(0,1fr),max-content] md:gap-2'>
       <figure>
@@ -32,31 +40,29 @@ const AiResponse = ({
         />
       </figure>
 
-      {!loading ? (
+      {id !== lastID || !loading ? (
         <div className='markdown-content'>
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              code(props) {
-                const { children, className } = props;
-                const match = /language-(\w+)/.exec(className || '');
-                return match ? (
-                  <CodeBlock match={match}>{children}</CodeBlock>
-                ) : (
-                  <code className={className}>{children}</code>
-                );
-              },
-            }}
-          >
-            {text}
-          </Markdown>
+          <Suspense fallback={<Skeleton />}>
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code(props) {
+                  const { children, className } = props;
+                  const match = /language-(\w+)/.exec(className || '');
+                  return match ? (
+                    <CodeBlock match={match}>{children}</CodeBlock>
+                  ) : (
+                    <code className={className}>{children}</code>
+                  );
+                },
+              }}
+            >
+              {text}
+            </Markdown>
+          </Suspense>
         </div>
       ) : (
-        <div className='space-y-3'>
-          <div className='h-4 w-full shimmer rounded'></div>
-          <div className='h-4 w-full shimmer rounded'></div>
-          <div className='h-4 w-3/4 shimmer rounded'></div>
-        </div>
+        <>{loading && <Skeleton />}</>
       )}
     </div>
   );

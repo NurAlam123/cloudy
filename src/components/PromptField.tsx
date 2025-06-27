@@ -117,7 +117,7 @@ const PromptField = () => {
 
     if (!isConversationPage) {
       if (conversationID) {
-        history.pushState({ new: false }, '', url);
+        history.pushState({ new: true }, '', url);
         router.push(url);
         return;
       } else {
@@ -125,7 +125,8 @@ const PromptField = () => {
       }
     }
 
-    // toggleRefresh();
+    history.pushState({ new: false }, '', url);
+    setPromptSubmitting(false);
   }, [
     handleInputChagne,
     inputValue,

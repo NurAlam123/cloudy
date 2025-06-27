@@ -18,6 +18,7 @@ const ChatContainer = ({
 }) => {
   const [conversations, setConversations] = useState<Chat[]>(chats);
   const [loading, setLoading] = useState<boolean>(false);
+  const [lastID, setLastID] = useState<string>('');
 
   const isInitialized = useRef<boolean>(false);
 
@@ -27,11 +28,13 @@ const ChatContainer = ({
 
   useEffect(() => {
     const isNew = history.state.new;
+    console.log(isNew);
     if (isNew) {
       toggleRefresh();
       history.replaceState({ new: false }, '', `/chat/${conversationID}`);
     }
-    if (conversations.length <= 0 && !isInitialized.current) {
+
+    if (!isInitialized.current && payload) {
       const id = generateID();
 
       const chat: Chat = {
@@ -43,6 +46,7 @@ const ChatContainer = ({
       isInitialized.current = true;
 
       setConversations([...conversations, chat]);
+      setLastID(id);
       setLoading(true);
 
       createResponse({
@@ -61,6 +65,7 @@ const ChatContainer = ({
           });
         });
         setLoading(false);
+        isInitialized.current = false;
       });
     }
   }, [toggleRefresh, payload, conversations, conversationID, resetPayload]);
@@ -71,6 +76,8 @@ const ChatContainer = ({
           <UserPrompt text={chat.user_prompt} />
           <AiResponse
             loading={loading}
+            lastID={lastID}
+            id={chat.$id ?? ''}
             text={chat.ai_response}
           />
         </div>
