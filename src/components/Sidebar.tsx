@@ -51,7 +51,10 @@ const Sidebar = ({ user }: { user: Models.User<Models.Preferences> }) => {
             className='hidden dark:grid'
           />
         </div>
-        <button className='flex items-center bg-light-primaryContainer text-light-onPrimaryContainer dark:bg-dark-primaryContainer dark:text-dark-onPrimaryContainer rounded-lg gap-2 text-label-large max-w-max h-[56px] ps-3 pe-4 shadow-elevation1 transition-shadow duration-150 ease-standard hover:shadow-elevation2 focus:shadow-elevation1 cursor-pointer disabled:bg-light-onSurface/[0.12] disabled:dark:bg-dark-onSurface/[0.12] disabled:text-light-onSurface/[0.38] disabled:dark:text-dark-onSurface/[0.38] disabled:shadow-none disabled:pointer-events-none'>
+        <Link
+          href='/'
+          className='flex items-center bg-light-primaryContainer text-light-onPrimaryContainer dark:bg-dark-primaryContainer dark:text-dark-onPrimaryContainer rounded-lg gap-2 text-label-large max-w-max h-[56px] ps-3 pe-4 shadow-elevation1 transition-shadow duration-150 ease-standard hover:shadow-elevation2 focus:shadow-elevation1 cursor-pointer disabled:bg-light-onSurface/[0.12] disabled:dark:bg-dark-onSurface/[0.12] disabled:text-light-onSurface/[0.38] disabled:dark:text-dark-onSurface/[0.38] disabled:shadow-none disabled:pointer-events-none'
+        >
           <Image
             src='/plus.svg'
             alt='Plus'
@@ -68,8 +71,8 @@ const Sidebar = ({ user }: { user: Models.User<Models.Preferences> }) => {
             draggable={false}
             className='dark:block hidden'
           />
-          <Link href='/'>New Chat</Link>
-        </button>
+          New Chat
+        </Link>
         <div>
           <p className='text-title-small h-9 grid items-center px-4'>
             Recent Chats

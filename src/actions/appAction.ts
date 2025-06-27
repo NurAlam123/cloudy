@@ -32,10 +32,15 @@ export const setTitle = async (payload: Payload) => {
   return conversation;
 };
 
-export const createResponse = async (
-  payload: Payload,
-  conversationID: string,
-) => {
+export const createResponse = async ({
+  payload,
+  conversationID,
+  id,
+}: {
+  payload: Payload;
+  conversationID: string;
+  id: string;
+}) => {
   const conversation = await getConversation(conversationID);
 
   const conversations: ChatHistroy[] = [];
@@ -58,7 +63,7 @@ export const createResponse = async (
 
   // Create a new chat document in the 'chats' collection
   await createConversation({
-    id: generateID(),
+    id,
     collectionName: 'chats',
     data: {
       user_prompt: payload.prompt,
