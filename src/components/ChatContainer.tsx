@@ -26,6 +26,17 @@ const ChatContainer = ({
   const payload = useAppStore((state) => state.payload) as Payload;
   const resetPayload = useAppStore((state) => state.resetPayload);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    containerRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
+  }, [loading, conversations, lastID]);
+
   useEffect(() => {
     const isNew = history.state.new;
     console.log(isNew);
@@ -70,7 +81,7 @@ const ChatContainer = ({
     }
   }, [toggleRefresh, payload, conversations, conversationID, resetPayload]);
   return (
-    <div>
+    <div ref={containerRef}>
       {conversations.map((chat: Chat) => (
         <div key={chat.$id}>
           <UserPrompt text={chat.user_prompt} />

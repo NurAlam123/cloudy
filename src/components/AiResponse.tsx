@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import CodeBlock from './CodeBlock';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import Skeleton from './Skeleton';
 
 const AiResponse = ({
@@ -17,10 +17,23 @@ const AiResponse = ({
   id: string;
   lastID: string;
 }) => {
-  console.log(id, lastID);
+  const responseRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!responseRef.current) return;
+    if (id !== lastID) return;
+
+    responseRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
+  }, [id, lastID, text, loading]);
 
   return (
-    <div className='grid grid-cols-1 items-center gap-1 py-2 md:grid-cols-[max-content,minmax(0,1fr),max-content] md:gap-2'>
+    <div
+      ref={responseRef}
+      className='grid grid-cols-1 items-center gap-1 py-2 md:grid-cols-[max-content,minmax(0,1fr),max-content] md:gap-2'
+    >
       <figure>
         <Image
           src='/cloudy-light.svg'
