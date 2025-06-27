@@ -139,7 +139,7 @@ const PromptField = () => {
 
   return (
     <motion.div
-      className='prompt-field-container overflow-y-hidden'
+      className='prompt-field-container overflow-y-hidden relative'
       variants={promptFieldVariant}
       initial='hidden'
       animate='visible'
@@ -147,7 +147,7 @@ const PromptField = () => {
     >
       <motion.div
         className={cn(
-          'prompt-field min-h-[40px] max-h-[200px] overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-words',
+          'prompt-field min-h-[40px] max-h-[240px] overflow-y-auto overflow-x-hidden whitespace-pre-wrap break-words max-w-[90%]',
           !placeholderShown && 'after:hidden',
         )}
         contentEditable
@@ -160,15 +160,15 @@ const PromptField = () => {
         onInput={handleInputChagne}
         onPaste={handlePaste}
         onKeyDown={(e) => {
-          // Handle case where use press only "Enter" key
-          if (e.key === 'Enter' && !e.shiftKey) {
+          // Handle case where use press only "Ctrl+Enter" key
+          if (e.key === 'Enter' && !e.shiftKey && e.ctrlKey) {
             e.preventDefault();
             handleSubmit();
           }
         }}
       />
 
-      <div className='me-2 mt-2'>
+      <div className='me-2 absolute right-2 top-1/2 -translate-y-1/2 flex justify-center items-center'>
         <IconButton
           title='send'
           icon='/send.svg'
